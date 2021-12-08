@@ -24,7 +24,7 @@ function build1CharProbaTable($alphabet, $dictionnary_filename, $json_filename)
 		} else {
 			echo "Erreur en ouvrant le fichier du dictionnaire !"; // error opening the file.
 		}
-		if (file_put_contents($json_filename, json_encode($table))) {
+		if (file_put_contents($json_filename, json_encode($table, JSON_UNESCAPED_UNICODE))) {
 			return $table;
 		} else {
 			return 'Erreur, le fichier "' . $json_filename . '" n\'a pas été enregistré';
@@ -83,7 +83,7 @@ function build1CharProbaTable($alphabet, $dictionnary_filename, $json_filename)
 		} else {
 			echo "Erreur en ouvrant le fichier du dictionnaire !"; // error opening the file.
 		}
-		if (file_put_contents($json_filename, json_encode($table))) {
+		if (file_put_contents($json_filename, json_encode($table, JSON_UNESCAPED_UNICODE))) {
 			return $table;
 		} else {
 			return 'Erreur, le fichier "' . $json_filename . '" n\'a pas été enregistré';
