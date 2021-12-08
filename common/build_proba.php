@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-	<meta charset="UTF-8" />
-</head>
-
-<body>
-
-	<?php
-
-	function build_1char_proba_table($alphabet, $dictionnary_filename, $json_filename)
+function build_1char_proba_table($alphabet, $dictionnary_filename, $json_filename)
 	{
 		$temp = array_fill_keys($alphabet, 0) + array('last letter' => 0);
 		$table = array('first letter' => $temp) + array_fill_keys($alphabet, $temp);
@@ -98,29 +89,3 @@
 			return 'Erreur, le fichier "' . $json_filename . '" n\'a pas été enregistré';
 		}
 	}
-
-
-	// REBUILD CACHE FILE AND DISPLAY IT
-	$alphabet = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "à", "â", "é", "è", "ê", "ë", "î", "ï", "ô", "ç", "ü", "û", "-", "'");
-
-	$dictionnary_filename = "fr/data/dictionnary_FR.txt";
-
-	$json_filename = 'fr/data/proba_table_2char_FR.json';
-
-	echo '<pre>';
-	print_r(build_2char_proba_table($alphabet, $dictionnary_filename, $json_filename));
-	echo '</pre>';
-
-
-	/*
-	// DISPLAY CACHE FILE
-	echo '<pre>';
-	print_r(json_decode(file_get_contents($json_filename), true));
-	echo '</pre>';
-	*/
-
-	?>
-
-</body>
-
-</html>
