@@ -1,6 +1,6 @@
 <?php
 
-function build_1char_proba_table($alphabet, $dictionnary_filename, $json_filename)
+function build1CharProbaTable($alphabet, $dictionnary_filename, $json_filename)
 	{
 		$temp = array_fill_keys($alphabet, 0) + array('last letter' => 0);
 		$table = array('first letter' => $temp) + array_fill_keys($alphabet, $temp);
@@ -32,7 +32,7 @@ function build_1char_proba_table($alphabet, $dictionnary_filename, $json_filenam
 	}
 
 
-	function build_2char_proba_table($alphabet, $dictionnary_filename, $json_filename)
+	function build2CharProbaTable($alphabet, $dictionnary_filename, $json_filename)
 	{
 		//building the table structure
 		$temp = array();

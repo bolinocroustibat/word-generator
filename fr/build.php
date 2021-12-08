@@ -16,7 +16,7 @@
 	$json_filename = 'data/proba_table_2char_FR.json';
 
 	echo '<pre>';
-	print_r(build_2char_proba_table($alphabet, $dictionnary_filename, $json_filename));
+	print_r(build2CharProbaTable($alphabet, $dictionnary_filename, $json_filename));
 	echo '</pre>';
 
 	/*

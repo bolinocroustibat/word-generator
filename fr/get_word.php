@@ -2,16 +2,19 @@
 
 include("../common/generate.php");
 
-
 function storeWordInDB($string)
 {
+	if (!include '../common/connect.php') {
+		throw new ErrorException("DB connection script not found");
+	}
+
+	$db = databaseConnect();
+
 	$type = NULL;
 	$genre = NULL;
 	$number = NULL;
 	$tense = NULL;
 	$conjug = NULL;
-	// prepare sql and bind parameters
-	$db = database_connect();
 	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, genre, number, tense, conjug, ip) VALUES (:word, :type, :genre, :number, :tense, :conjug, :ip)");
 	$stmt->bindParam(':word', $string);
 	$stmt->bindParam(':type', $type);
@@ -121,15 +124,15 @@ function storeWordInDB($string)
 	// insert a row
 	$stmt->execute();
 }
+
 $json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
 $string = generateWordBy2Char($json_filename);
 
 // Try to save the word in DB
 try {
-	include("../common/connect.php");
 	storeWordInDB($string);
 } catch (Exception $e) {
-	echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+	// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
 }
 
 // Output the word in JSON page
