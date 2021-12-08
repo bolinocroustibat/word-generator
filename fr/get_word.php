@@ -1,6 +1,5 @@
 <?php
 
-include("../common/connect.php");
 include("../common/generate.php");
 
 
@@ -124,5 +123,15 @@ function storeWordInDB($string)
 }
 $json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
 $string = generateWordBy2Char($json_filename);
-storeWordInDB($string);
-echo $string;
+
+// Try to save the word in DB
+try {
+	include("../common/connect.php");
+	storeWordInDB($string);
+} catch (Exception $e) {
+	echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+}
+
+// Output the word in JSON page
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($string);
