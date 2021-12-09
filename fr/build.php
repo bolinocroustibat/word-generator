@@ -11,8 +11,8 @@
 
 	include("../common/build_proba.php");
 
-	$alphabet = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "à", "â", "é", "è", "ê", "ë", "î", "ï", "ô", "ç", "ü", "û", "-", "'");
-	$dictionnary_filename = "data/dictionnary_FR.txt";
+	$alphabet = array("a", "à", "â", "b", "c", "ç", "d", "e", "é", "è", "ê", "ë", "f", "g", "h", "i", "î", "ï", "j", "k", "l", "m", "n", "o", "ô", "p", "q", "r", "s", "t", "u", "ü", "û", "v", "w", "x", "y", "z", "-", "'");
+	$dictionnary_filename = "data/dictionary_FR.txt";
 	$json_filename = 'data/proba_table_2char_FR.json';
 
 	echo '<pre>';
