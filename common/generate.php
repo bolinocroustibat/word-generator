@@ -1,5 +1,19 @@
 <?php
 
+function generateWord($json_filename)
+{
+	$word = generateWordBy2Char($json_filename);
+	# Long words don't work that well.
+	# If the generated word is too long (>16, empirically chosen), let's try to generate another one, but not more than 5 tries for security.
+	$i = 0;
+	while ((strlen($word) > 16) && ($i < 5)) {
+		$word = generateWordBy2Char($json_filename);
+		$i++;
+	}
+	return $word;
+}
+
+
 function generateWordBy1Char($json_filename)
 {
 	$table = json_decode(file_get_contents($json_filename), true);

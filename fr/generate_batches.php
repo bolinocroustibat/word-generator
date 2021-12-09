@@ -23,7 +23,7 @@
 					for ($i = 2; $i <= $wordsNumber; $i++) {
 						echo $i . " : ";
 						$json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
-						$string = generateWordBy2Char($json_filename);
+						$string = generateWord($json_filename);
 						storeWordInDB($string);
 						echo $string;
 						echo "<br>";

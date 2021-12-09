@@ -17,7 +17,7 @@ function storeWordInDB($string)
 }
 
 $json_filename = dirname(__FILE__) . '/data/proba_table_2char_EN.json';
-$string = generateWordBy2Char($json_filename);
+$string = generateWord($json_filename);
 
 // Try to save the word in DB
 try {
