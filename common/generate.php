@@ -3,10 +3,10 @@
 function generateWord($json_filename)
 {
 	$word = generateWordBy2Char($json_filename);
-	# Long words don't work that well.
-	# If the generated word is too long (>16, empirically chosen), let's try to generate another one, but not more than 5 tries for security.
+	# Too short and too long words don't look that well.
+	# If the generated word is too short (<4, empirically chosen) or too long (>16, empirically chosen), let's try to generate another one, but not more than 5 tries for security.
 	$i = 0;
-	while ((strlen($word) > 16) && ($i < 5)) {
+	while (((strlen($word) < 4) || (strlen($word) > 16)) && ($i < 5)) {
 		$word = generateWordBy2Char($json_filename);
 		$i++;
 	}
