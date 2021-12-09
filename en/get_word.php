@@ -28,4 +28,4 @@ try {
 
 // Output the word in JSON page
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($string);
+echo json_encode($string, JSON_UNESCAPED_UNICODE);
