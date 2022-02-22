@@ -2,27 +2,13 @@
 
 include("../common/generate.php");
 
-function storeWordInDB($string)
+function getWordType($string)
 {
-	if (!include '../common/connect.php') {
-		throw new ErrorException("DB connection script not found");
-	}
-
-	$db = databaseConnect();
-
 	$type = NULL;
 	$genre = NULL;
 	$number = NULL;
 	$tense = NULL;
 	$conjug = NULL;
-	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, genre, number, tense, conjug, ip) VALUES (:word, :type, :genre, :number, :tense, :conjug, :ip)");
-	$stmt->bindParam(':word', $string);
-	$stmt->bindParam(':type', $type);
-	$stmt->bindParam(':genre', $genre);
-	$stmt->bindParam(':number', $number);
-	$stmt->bindParam(':tense', $tense);
-	$stmt->bindParam(':conjug', $conjug);
-	$stmt->bindParam(':ip', $_SERVER["REMOTE_ADDR"]);
 	// test ending of word
 	mb_internal_encoding("UTF-8");
 	if ((mb_substr($string, -1)) == 'é') {
@@ -121,6 +107,25 @@ function storeWordInDB($string)
 		$genre = 'm';
 		$number = 's';
 	}
+	return [$type, $genre, $number, $tense, $conjug];
+}
+
+function storeWordInDB($string, $type, $genre, $number, $tense, $conjug)
+{
+	if (!include '../common/connect.php') {
+		throw new ErrorException("DB connection script not found");
+	}
+
+	$db = databaseConnect();
+
+	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, genre, number, tense, conjug, ip) VALUES (:word, :type, :genre, :number, :tense, :conjug, :ip)");
+	$stmt->bindParam(':word', $string);
+	$stmt->bindParam(':type', $type);
+	$stmt->bindParam(':genre', $genre);
+	$stmt->bindParam(':number', $number);
+	$stmt->bindParam(':tense', $tense);
+	$stmt->bindParam(':conjug', $conjug);
+	$stmt->bindParam(':ip', $_SERVER["REMOTE_ADDR"]);
 	// insert a row
 	$stmt->execute();
 }
@@ -128,13 +133,17 @@ function storeWordInDB($string)
 $json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
 $string = generateWord($json_filename);
 
+// Get the characteristics of the generated word
+[$type, $genre, $number, $tense, $conjug] = getWordType($string);
+
 // Try to save the word in DB
 try {
-	storeWordInDB($string);
+	storeWordInDB($string, $type, $genre, $number, $tense, $conjug);
 } catch (Exception $e) {
 	// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
 }
 
 // Output the word in JSON page
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($string, JSON_UNESCAPED_UNICODE);
+$response = array('string' => $string, 'type' => $type, 'genre' => $genre, 'number' => $number, 'tense' => $tense, 'conjug' => $conjug);
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
