@@ -15,10 +15,10 @@ I also wrote the same in Python (you're relieved, huh?), with more advanced NLP 
 Just run it under as static web pages under a web server with PHP 7.x, and optionnally a MySQL database.
 
 API endpoints:
-- `/en/get_word.php` (*json*): returns a random English-sounding word
-- `/fr/get_word.php` (*json*): returns a random French-sounding word
-- `/es/get_word.php` (*json*): returns a random Spanish-sounding word
-- `/it/get_word.php` (*json*): returns a random Italian-sounding word
+- `/en/` (*json*): returns a random English-sounding word
+- `/fr/` (*json*): returns a random French-sounding word, along with its type, gender, tense and conjugation if applicable
+- `/es/` (*json*): returns a random Spanish-sounding word
+- `/it/` (*json*): returns a random Italian-sounding word
 
 You can build/rebuid the probability data using the following scripts, can be run as web pages:
 - `/en/build.php`
@@ -44,4 +44,4 @@ function databaseConnect(){
 }
 ?>
 ```
-For French words, it will associate the saved ones with their *presumed* gender, tense and conjugation.
+For French words, it will associate the saved ones with their *presumed* type, gender, tense and conjugation.

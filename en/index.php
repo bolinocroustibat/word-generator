@@ -16,17 +16,25 @@ function storeWordInDB($string)
 	$stmt->execute(); // insert a row
 }
 
-$json_filename = dirname(__FILE__) . '/data/proba_table_2char_EN.json';
-$string = generateWord($json_filename);
-
-// Try to save the word in DB
-try {
-	storeWordInDB($string);
-} catch (Exception $e) {
-	// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+// Get request parameters and method
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == 'GET') {
+	$json_filename = dirname(__FILE__) . '/data/proba_table_2char_EN.json';
+	$string = generateWord($json_filename);
+	// Try to save the word in DB
+	try {
+		storeWordInDB($string);
+	} catch (Exception $e) {
+		// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+	}
+	$response = array('string' => $string);
+} elseif ($method == 'POST') {
+	# TODO retrieve the word from the DB
+} else {
+	$response = 'Method not allowed';
 }
 
-// Output the word in JSON page
+// Output as JSON page
 header('Content-Type: application/json; charset=utf-8');
 $response = array('string' => $string);
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

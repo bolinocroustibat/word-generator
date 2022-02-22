@@ -130,20 +130,26 @@ function storeWordInDB($string, $type, $genre, $number, $tense, $conjug)
 	$stmt->execute();
 }
 
-$json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
-$string = generateWord($json_filename);
-
-// Get the characteristics of the generated word
-[$type, $genre, $number, $tense, $conjug] = getWordType($string);
-
-// Try to save the word in DB
-try {
-	storeWordInDB($string, $type, $genre, $number, $tense, $conjug);
-} catch (Exception $e) {
-	// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+// Get request parameters and method
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == 'GET') {
+	$json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
+	$string = generateWord($json_filename);
+	// Get the characteristics of the generated word
+	[$type, $genre, $number, $tense, $conjug] = getWordType($string);
+	// Try to save the word in DB
+	try {
+		storeWordInDB($string, $type, $genre, $number, $tense, $conjug);
+	} catch (Exception $e) {
+		// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
+	}
+	$response = array('string' => $string, 'type' => $type, 'genre' => $genre, 'number' => $number, 'tense' => $tense, 'conjug' => $conjug);
+} elseif ($method == 'POST') {
+	# TODO retrieve the word from the DB
+} else {
+	$response = 'Method not allowed';
 }
 
-// Output the word in JSON page
+// Output as JSON page
 header('Content-Type: application/json; charset=utf-8');
-$response = array('string' => $string, 'type' => $type, 'genre' => $genre, 'number' => $number, 'tense' => $tense, 'conjug' => $conjug);
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
