@@ -5,7 +5,7 @@ include("../common/generate.php");
 function getWordType($string)
 {
 	$type = NULL;
-	$genre = NULL;
+	$gender = NULL;
 	$number = NULL;
 	$tense = NULL;
 	$conjug = NULL;
@@ -13,19 +13,19 @@ function getWordType($string)
 	mb_internal_encoding("UTF-8");
 	if ((mb_substr($string, -1)) == 'é') {
 		$type = 'past-participle';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 's';
 	} elseif ((mb_substr($string, -2)) == 'ée') {
 		$type = 'past-participle';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 's';
 	} elseif ((mb_substr($string, -2)) == 'és') {
 		$type = 'past-participle';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 'p';
 	} elseif ((mb_substr($string, -3)) == 'ées') {
 		$type = 'past-participle';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 'p';
 	} elseif ((substr($string, -2)) == 'er' || (substr($string, -2)) == 'ir') {
 		$type = 'verb';
@@ -72,45 +72,45 @@ function getWordType($string)
 		$conjug = '6';
 	} elseif ((substr($string, -2)) == 'if') {
 		$type = 'adjective';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 's';
 	} elseif ((substr($string, -3)) == 'ive') {
 		$type = 'adjective';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 's';
 	} elseif ((substr($string, -3)) == 'eux') {
 		$type = 'adjective';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 'p';
 	} elseif ((substr($string, -4)) == 'euse') {
 		$type = 'adjective';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 'p';
 	} elseif ((substr($string, -4)) == 'ique') {
 		$type = 'adjective';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 's';
 	} elseif ((substr($string, -2)) == 'es') {
 		$type = 'noun';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 'p';
 	} elseif ((substr($string, -1)) == 'e') {
 		$type = 'noun';
-		$genre = 'f';
+		$gender = 'f';
 		$number = 's';
 	} elseif ((substr($string, -1)) == 's') {
 		$type = 'noun';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 'p';
 	} else {
 		$type = 'noun';
-		$genre = 'm';
+		$gender = 'm';
 		$number = 's';
 	}
-	return [$type, $genre, $number, $tense, $conjug];
+	return [$type, $gender, $number, $tense, $conjug];
 }
 
-function storeWordInDB($string, $type, $genre, $number, $tense, $conjug)
+function storeWordInDB($string, $type, $gender, $number, $tense, $conjug)
 {
 	if (!include '../common/connect.php') {
 		throw new ErrorException("DB connection script not found");
@@ -118,10 +118,10 @@ function storeWordInDB($string, $type, $genre, $number, $tense, $conjug)
 
 	$db = databaseConnect();
 
-	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, genre, number, tense, conjug, ip) VALUES (:word, :type, :genre, :number, :tense, :conjug, :ip)");
+	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, gender, number, tense, conjug, ip) VALUES (:word, :type, :gender, :number, :tense, :conjug, :ip)");
 	$stmt->bindParam(':word', $string);
 	$stmt->bindParam(':type', $type);
-	$stmt->bindParam(':genre', $genre);
+	$stmt->bindParam(':gender', $gender);
 	$stmt->bindParam(':number', $number);
 	$stmt->bindParam(':tense', $tense);
 	$stmt->bindParam(':conjug', $conjug);
@@ -136,14 +136,14 @@ if ($method == 'GET') {
 	$json_filename = dirname(__FILE__) . '/data/proba_table_2char_FR.json';
 	$string = generateWord($json_filename);
 	// Get the characteristics of the generated word
-	[$type, $genre, $number, $tense, $conjug] = getWordType($string);
+	[$type, $gender, $number, $tense, $conjug] = getWordType($string);
 	// Try to save the word in DB
 	try {
-		storeWordInDB($string, $type, $genre, $number, $tense, $conjug);
+		storeWordInDB($string, $type, $gender, $number, $tense, $conjug);
 	} catch (Exception $e) {
 		// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
 	}
-	$response = array('string' => $string, 'type' => $type, 'genre' => $genre, 'number' => $number, 'tense' => $tense, 'conjug' => $conjug);
+	$response = array('string' => $string, 'type' => $type, 'gender' => $gender, 'number' => $number, 'tense' => $tense, 'conjug' => $conjug);
 } elseif ($method == 'POST') {
 	# TODO retrieve the word from the DB
 } else {
