@@ -11,30 +11,30 @@ function getWordType($string)
 	$conjug = NULL;
 	// test ending of word
 	mb_internal_encoding("UTF-8");
-	if ((mb_substr($string, -1)) == 'é') {
+	if (mb_substr($string, -1) == 'é') {
 		$type = 'past-participle';
 		$gender = 'm';
 		$number = 's';
-	} elseif ((mb_substr($string, -2)) == 'ée') {
+	} elseif (mb_substr($string, -2) == 'ée') {
 		$type = 'past-participle';
 		$gender = 'f';
 		$number = 's';
-	} elseif ((mb_substr($string, -2)) == 'és') {
+	} elseif (mb_substr($string, -2) == 'és') {
 		$type = 'past-participle';
 		$gender = 'm';
 		$number = 'p';
-	} elseif ((mb_substr($string, -3)) == 'ées') {
+	} elseif (mb_substr($string, -3) == 'ées') {
 		$type = 'past-participle';
 		$gender = 'f';
 		$number = 'p';
-	} elseif ((substr($string, -2)) == 'er' || (substr($string, -2)) == 'ir') {
+	} elseif ((substr($string, -2) == 'er') or (substr($string, -2) == 'ir')) {
 		$type = 'verb';
 		$tense = 'infinitive';
-	} elseif ((substr($string, -3)) == 'ons') {
+	} elseif (substr($string, -3) == 'ons') {
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '4';
-	} elseif ((substr($string, -2)) == 'ez') {
+	} elseif (substr($string, -2) == 'ez') {
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '5';
@@ -42,63 +42,63 @@ function getWordType($string)
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '6';
-	} elseif ((substr($string, -3)) == 'ais') {
+	} elseif (substr($string, -3) == 'ais') {
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '1';
-	} elseif ((substr($string, -2)) == 'as') {
+	} elseif (substr($string, -2) == 'as') {
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '2';
-	} elseif ((substr($string, -3)) == 'ait') {
+	} elseif (substr($string, -3) == 'ait') {
 		$type = 'verb';
 		$tense = 'present';
 		$conjug = '3';
-	} elseif ((substr($string, -5)) == 'aient') {
+	} elseif (substr($string, -5) == 'aient') {
 		$type = 'verb';
 		$tense = 'past';
 		$conjug = '6';
-	} elseif ((substr($string, -2)) == 'ra') {
+	} elseif (substr($string, -2) == 'ra') {
 		$type = 'verb';
 		$tense = 'future';
 		$conjug = '1';
-	} elseif ((substr($string, -3)) == 'ras') {
+	} elseif (substr($string, -3) == 'ras') {
 		$type = 'verb';
 		$tense = 'future';
 		$conjug = '2';
-	} elseif ((substr($string, -3)) == 'ont') {
+	} elseif (substr($string, -3) == 'ont') {
 		$type = 'verb';
 		$tense = 'future';
 		$conjug = '6';
-	} elseif ((substr($string, -2)) == 'if') {
+	} elseif (substr($string, -2) == 'if') {
 		$type = 'adjective';
 		$gender = 'm';
 		$number = 's';
-	} elseif ((substr($string, -3)) == 'ive') {
+	} elseif (substr($string, -3) == 'ive') {
 		$type = 'adjective';
 		$gender = 'f';
 		$number = 's';
-	} elseif ((substr($string, -3)) == 'eux') {
+	} elseif (substr($string, -3) == 'eux') {
 		$type = 'adjective';
 		$gender = 'm';
 		$number = 'p';
-	} elseif ((substr($string, -4)) == 'euse') {
+	} elseif (substr($string, -4) == 'euse') {
 		$type = 'adjective';
 		$gender = 'f';
 		$number = 'p';
-	} elseif ((substr($string, -4)) == 'ique') {
+	} elseif (substr($string, -4) == 'ique') {
 		$type = 'adjective';
 		$gender = 'm';
 		$number = 's';
-	} elseif ((substr($string, -2)) == 'es') {
+	} elseif (substr($string, -2) == 'es') {
 		$type = 'noun';
 		$gender = 'f';
 		$number = 'p';
-	} elseif ((substr($string, -1)) == 'e') {
+	} elseif (substr($string, -1) == 'e') {
 		$type = 'noun';
 		$gender = 'f';
 		$number = 's';
-	} elseif ((substr($string, -1)) == 's') {
+	} elseif (substr($string, -1) == 's') {
 		$type = 'noun';
 		$gender = 'm';
 		$number = 'p';

@@ -15,7 +15,7 @@ I also wrote the same in Python (you're relieved, huh?), with more advanced NLP 
 Just run it under as static web pages under a web server with PHP 7.x, and optionnally a MySQL database.
 
 API endpoints:
-- `/en/` (*json*): returns a random English-sounding word
+- `/en/` (*json*): returns a random English-sounding word, along with its type and tense if applicable
 - `/fr/` (*json*): returns a random French-sounding word, along with its type, gender, tense and conjugation if applicable
 - `/es/` (*json*): returns a random Spanish-sounding word
 - `/it/` (*json*): returns a random Italian-sounding word
