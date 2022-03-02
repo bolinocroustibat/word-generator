@@ -118,8 +118,8 @@ function storeWordInDB($string, $type, $gender, $number, $tense, $conjug)
 
 	$db = databaseConnect();
 
-	$stmt = $db->prepare("INSERT INTO generated_words_FR (word, type, gender, number, tense, conjug, ip) VALUES (:word, :type, :gender, :number, :tense, :conjug, :ip)");
-	$stmt->bindParam(':word', $string);
+	$stmt = $db->prepare("INSERT INTO generated_words_FR (string, type, gender, number, tense, conjug, ip) VALUES (:string, :type, :gender, :number, :tense, :conjug, :ip)");
+	$stmt->bindParam(':string', $string);
 	$stmt->bindParam(':type', $type);
 	$stmt->bindParam(':gender', $gender);
 	$stmt->bindParam(':number', $number);
