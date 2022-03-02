@@ -65,7 +65,7 @@ function getWordType($string)
 	return [$type, $number, $tense];
 }
 
-function storeWordInDB($string)
+function storeWordInDB($string, $type, $number, $tense)
 {
 	if (!include '../common/connect.php') {
 		throw new ErrorException("DB connection script not found");
@@ -73,10 +73,15 @@ function storeWordInDB($string)
 
 	$db = databaseConnect();
 
-	$stmt = $db->prepare("INSERT INTO generated_words_EN (word, ip) VALUES (:word, :ip)");
+	$stmt = $db->prepare("INSERT INTO generated_words_EN (word, type, number, tense,ip) VALUES (:word, :type, :number, :tense, :ip)");
 	$stmt->bindParam(':word', $string);
+	$stmt->bindParam(':type', $type);
+	$stmt->bindParam(':number', $number);
+	$stmt->bindParam(':tense', $tense);
 	$stmt->bindParam(':ip', $_SERVER["REMOTE_ADDR"]);
-	$stmt->execute(); // insert a row
+	// insert a row
+	$stmt->execute();
+
 }
 
 // Get request parameters and method
@@ -88,7 +93,7 @@ if ($method == 'GET') {
 	[$type, $number, $tense] = getWordType($string);
 	// Try to save the word in DB
 	try {
-		storeWordInDB($string);
+		storeWordInDB($string, $type, $number, $tense);
 	} catch (Exception $e) {
 		// echo "Couldn't save in DB: ",  $e->getMessage(), "\n";
 	}
